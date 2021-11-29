@@ -3,6 +3,7 @@ package com.pkg.recyclerview.tasklist
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -19,10 +20,19 @@ object TasksDiffCallback : DiffUtil.ItemCallback<Task>() {
 }
 
 class TaskListAdapter() : ListAdapter<Task ,TaskListAdapter.TaskViewHolder>(TasksDiffCallback) {
+    var onCLickDelete: (Task) -> Unit = {}
+    var onClickEdit: (Task) -> Unit = {}
+
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(task: Task) {
             itemView.findViewById<TextView>(R.id.task_title).text = task.title
             itemView.findViewById<TextView>(R.id.task_desc).text = task.description
+            itemView.findViewById<ImageButton>(R.id.imageButton).setOnClickListener {
+                onCLickDelete(task);
+            }
+            itemView.findViewById<ImageButton>(R.id.imageButtonEdit).setOnClickListener {
+                onClickEdit(task);
+            }
         }
     }
 

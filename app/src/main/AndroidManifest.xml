@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RecyclerView">
         <activity
+            android:name=".form.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.pkg.form.FormActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
