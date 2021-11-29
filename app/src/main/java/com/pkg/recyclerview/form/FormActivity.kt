@@ -1,6 +1,5 @@
-package com.pkg.form
+package com.pkg.recyclerview.form
 
-import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText

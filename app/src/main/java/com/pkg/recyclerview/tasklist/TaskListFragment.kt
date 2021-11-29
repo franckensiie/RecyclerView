@@ -2,20 +2,14 @@ package com.pkg.recyclerview.tasklist
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.pkg.form.FormActivity
-import com.pkg.recyclerview.R
+import com.pkg.recyclerview.form.FormActivity
 import com.pkg.recyclerview.databinding.FragmentTaskListBinding
-import java.text.Normalizer
-import java.util.*
 
 
 class TaskListFragment : Fragment() {
