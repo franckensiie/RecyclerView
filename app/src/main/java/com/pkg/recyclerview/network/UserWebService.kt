@@ -5,5 +5,5 @@ import retrofit2.http.GET
 
 interface UserWebService {
     @GET("users/info")
-    suspend fun getInfo(): Response<UserInfo>
+    suspend fun getInfo(): Response<UserInfo>;
 }

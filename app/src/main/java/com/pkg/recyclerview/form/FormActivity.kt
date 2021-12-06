@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageButton
 import com.pkg.recyclerview.R
-import com.pkg.recyclerview.tasklist.Task
+import com.pkg.recyclerview.network.Task
 import java.util.*
 
 class FormActivity : AppCompatActivity() {

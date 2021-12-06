@@ -1,5 +1,6 @@
 package com.pkg.recyclerview.network
 
+import TasksWebService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -9,7 +10,7 @@ import retrofit2.Retrofit
 object Api {
 
     // constantes qui serviront à faire les requêtes
-    private const val BASE_URL = "https://android-tasks-api.herokuapp.com/api/"
+    private const val BASE_URL = "https://android-tasks-api.herokuapp.com/api/v1/"
     private const val TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1MzIsImV4cCI6MTY2OTczODU0Mn0.woPZppOHBs9anJQA2ulxBhuaVuHszFYN2lyHWlcjy1U"
 
     // client HTTP
@@ -18,7 +19,7 @@ object Api {
             .addInterceptor { chain ->
                 // intercepteur qui ajoute le `header` d'authentification avec votre token:
                 val newRequest = chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer $TOKEN")
+                    .addHeader("Authorization", "$TOKEN")
                     .build()
                 chain.proceed(newRequest)
             }
@@ -42,7 +43,11 @@ object Api {
         .addConverterFactory(converterFactory)
         .build()
 
-    val userWebService by lazy {
+    val userWebService: UserWebService by lazy {
         retrofit.create(UserWebService::class.java)
+    }
+
+    val tasksWebService: TasksWebService by lazy {
+        retrofit.create(TasksWebService::class.java)
     }
 }

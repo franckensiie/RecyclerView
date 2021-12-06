@@ -1,7 +1,9 @@
 package com.pkg.recyclerview.network
 
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class UserInfo(
     @SerialName("email")
     val email: String,
