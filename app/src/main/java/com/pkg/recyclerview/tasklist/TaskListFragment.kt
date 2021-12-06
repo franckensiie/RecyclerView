@@ -2,42 +2,39 @@ package com.pkg.recyclerview.tasklist
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pkg.recyclerview.form.FormActivity
 import com.pkg.recyclerview.databinding.FragmentTaskListBinding
 import com.pkg.recyclerview.network.Api
 import com.pkg.recyclerview.network.Task
-import com.pkg.recyclerview.network.TasksRepository
+import com.pkg.recyclerview.network.TaskListViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 
 class TaskListFragment : Fragment() {
 
     private val myAdapter = TaskListAdapter();
-    private val tasksRepository = TasksRepository()
+    private val viewModel = TaskListViewModel();
 
     private val formLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         val task = result.data?.getSerializableExtra("task") as? Task
         if (task != null) {
-            val oldTask = taskList.firstOrNull {it.id == task.id}
+            val oldTask = viewModel.taskList.value?.firstOrNull {it.id == task.id}
             if (oldTask != null) {
-                taskList.removeAll { t -> t.id == oldTask.id }
-                lifecycleScope.launch {
-                    tasksRepository.updateTask(task);
-                }
+                viewModel.updateTask(task, oldTask);
             } else {
-                lifecycleScope.launch {
-                    tasksRepository.createTask(task);
-                }
+                viewModel.createTask(task);
             }
-            taskList.add(task)
-            myAdapter.submitList(taskList.toList());
+            myAdapter.submitList(viewModel.taskList.value?.toList());
         }
     }
 
@@ -47,7 +44,7 @@ class TaskListFragment : Fragment() {
         Task(id = "id_2", title = "Task 2"),
         Task(id = "id_3", title = "Task 3")
     )*/
-    private val taskList = mutableListOf<Task>();
+    //private val taskList = mutableListOf<Task>();
 
     private var _binding: FragmentTaskListBinding? = null
     private val binding get() = _binding!!
@@ -63,16 +60,17 @@ class TaskListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.taskList.observe(viewLifecycleOwner) { newList ->
+            myAdapter.submitList(newList);
+        }
+
         //val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
         val recyclerView = binding.recyclerView;
         recyclerView.layoutManager = LinearLayoutManager(activity);
         //val myAdapter = TaskListAdapter()
         recyclerView.adapter = myAdapter
-        lifecycleScope.launch {
-            tasksRepository.refresh();
-            taskList.addAll(tasksRepository.taskList.value);
-            myAdapter.submitList(taskList.toList())
-        }
+
+        viewModel.refresh();
 
         // val button = view.findViewById<FloatingActionButton>(R.id.floatingActionButton);
         val button = binding.floatingActionButton;
@@ -86,11 +84,7 @@ class TaskListFragment : Fragment() {
 
         // Delete
         myAdapter.onCLickDelete = { task ->
-            taskList.removeAll { t -> t.id == task.id }
-            lifecycleScope.launch {
-                tasksRepository.deleteTask(task);
-            }
-            myAdapter.submitList(taskList.toList())
+            viewModel.deleteTask(task);
         }
 
         // Edit
@@ -99,6 +93,7 @@ class TaskListFragment : Fragment() {
             intent.putExtra("taskToEdit", task)
             formLauncher.launch(intent)
         }
+
     }
 
     override fun onResume() {
@@ -108,9 +103,6 @@ class TaskListFragment : Fragment() {
             val userInfo = Api.userWebService.getInfo().body()!!
             val userInfoTextView = binding.userInfoTextView;
             userInfoTextView.text = "${userInfo.firstName} ${userInfo.lastName}"
-
-            tasksRepository.refresh()
         }
     }
 }
-
