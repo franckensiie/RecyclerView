@@ -116,6 +116,12 @@ class TaskListFragment : Fragment() {
             val userInfo = Api.userWebService.getInfo().body()!!
             val userInfoTextView = binding.userInfoTextView;
             userInfoTextView.text = "${userInfo.firstName} ${userInfo.lastName}"
+            if (userInfo.avatar.toString() != "") {
+                binding.avatarImageView.load(userInfo.avatar) {
+                    transformations(CircleCropTransformation())
+                    error(R.drawable.ic_launcher_background)
+                }
+            }
         }
     }
 }

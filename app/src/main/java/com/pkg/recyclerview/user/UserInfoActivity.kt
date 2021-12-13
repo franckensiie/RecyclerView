@@ -4,20 +4,23 @@ import android.Manifest
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.net.toUri
+import androidx.lifecycle.lifecycleScope
 import com.pkg.recyclerview.R
-import com.pkg.recyclerview.network.Task
-import java.util.*
+import com.pkg.recyclerview.network.Api
+import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 
 @RequiresApi(Build.VERSION_CODES.M)
 class UserInfoActivity : AppCompatActivity() {
@@ -77,10 +80,30 @@ class UserInfoActivity : AppCompatActivity() {
     }
 
     private fun handleImage(imageUri: Uri) {
-        // afficher l'image dans l'ImageView
+        val converted = convert(imageUri);
+        lifecycleScope.launch {
+            Api.userWebService.updateAvatar(converted);
+        }
+    }
+
+    private val cameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { bitmap ->
+        val tmpFile = File.createTempFile("avatar", "jpeg")
+        tmpFile.outputStream().use {
+            bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, it)
+        }
+        handleImage(tmpFile.toUri())
     }
 
     private fun launchCamera() {
-        // à compléter à l'étape suivante
+        cameraLauncher.launch(null)
     }
+
+    private fun convert(uri: Uri): MultipartBody.Part {
+        return MultipartBody.Part.createFormData(
+            name = "avatar",
+            filename = "temp.jpeg",
+            body = this.contentResolver.openInputStream(uri)!!.readBytes().toRequestBody()
+        )
+    }
+
 }
