@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pkg.recyclerview">
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,6 +12,9 @@
         android:theme="@style/Theme.RecyclerView">
         <activity
             android:name="com.pkg.recyclerview.form.FormActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.pkg.recyclerview.user.UserInfoActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

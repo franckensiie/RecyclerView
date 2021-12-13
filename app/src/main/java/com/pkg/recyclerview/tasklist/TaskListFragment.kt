@@ -11,11 +11,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import coil.load
+import coil.transform.CircleCropTransformation
+import com.pkg.recyclerview.R
 import com.pkg.recyclerview.form.FormActivity
 import com.pkg.recyclerview.databinding.FragmentTaskListBinding
 import com.pkg.recyclerview.network.Api
 import com.pkg.recyclerview.network.Task
 import com.pkg.recyclerview.network.TaskListViewModel
+import com.pkg.recyclerview.user.UserInfoActivity
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -94,10 +98,19 @@ class TaskListFragment : Fragment() {
             formLauncher.launch(intent)
         }
 
+        binding.avatarImageView.setOnClickListener {
+            val intent = Intent(activity, UserInfoActivity::class.java)
+            formLauncher.launch(intent)
+        }
+
     }
 
     override fun onResume() {
         super.onResume()
+
+        binding.avatarImageView.load("https://goo.gl/gEgYUd") {
+            transformations(CircleCropTransformation())
+        }
         // Ici on ne va pas gérer les cas d'erreur donc on force le crash avec "!!"
         lifecycleScope.launch {
             val userInfo = Api.userWebService.getInfo().body()!!
