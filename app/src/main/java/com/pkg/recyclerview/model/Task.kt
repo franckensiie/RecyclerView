@@ -1,4 +1,4 @@
-package com.pkg.recyclerview.network
+package com.pkg.recyclerview.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

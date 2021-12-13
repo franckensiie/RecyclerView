@@ -11,10 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RecyclerView">
         <activity
-            android:name="com.pkg.recyclerview.form.FormActivity"
+            android:name="com.pkg.recyclerview.FormActivity"
             android:exported="false" />
         <activity
-            android:name="com.pkg.recyclerview.user.UserInfoActivity"
+            android:name="com.pkg.recyclerview.UserInfoActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

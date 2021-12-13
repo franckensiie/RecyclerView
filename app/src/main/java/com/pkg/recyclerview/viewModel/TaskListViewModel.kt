@@ -1,12 +1,11 @@
-package com.pkg.recyclerview.network
+package com.pkg.recyclerview.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import com.pkg.recyclerview.data.TasksRepository
+import com.pkg.recyclerview.model.Task
 import kotlinx.coroutines.launch
 
 class TaskListViewModel: ViewModel() {

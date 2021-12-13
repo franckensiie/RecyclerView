@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.pkg.recyclerview.R
-import com.pkg.recyclerview.network.Task
+import com.pkg.recyclerview.model.Task
 
 object TasksDiffCallback : DiffUtil.ItemCallback<Task>() {
     override fun areItemsTheSame(oldItem: Task, newItem: Task) : Boolean {
@@ -20,7 +20,7 @@ object TasksDiffCallback : DiffUtil.ItemCallback<Task>() {
     }
 }
 
-class TaskListAdapter() : ListAdapter<Task ,TaskListAdapter.TaskViewHolder>(TasksDiffCallback) {
+class TaskListAdapter() : ListAdapter<Task,TaskListAdapter.TaskViewHolder>(TasksDiffCallback) {
     var onCLickDelete: (Task) -> Unit = {}
     var onClickEdit: (Task) -> Unit = {}
 

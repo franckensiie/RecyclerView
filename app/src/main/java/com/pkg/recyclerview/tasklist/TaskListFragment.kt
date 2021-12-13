@@ -2,25 +2,22 @@ package com.pkg.recyclerview.tasklist
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.pkg.recyclerview.R
-import com.pkg.recyclerview.form.FormActivity
+import com.pkg.recyclerview.FormActivity
 import com.pkg.recyclerview.databinding.FragmentTaskListBinding
 import com.pkg.recyclerview.network.Api
-import com.pkg.recyclerview.network.Task
-import com.pkg.recyclerview.network.TaskListViewModel
-import com.pkg.recyclerview.user.UserInfoActivity
-import kotlinx.coroutines.flow.collect
+import com.pkg.recyclerview.model.Task
+import com.pkg.recyclerview.viewModel.TaskListViewModel
+import com.pkg.recyclerview.UserInfoActivity
 import kotlinx.coroutines.launch
 
 

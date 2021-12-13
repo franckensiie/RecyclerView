@@ -1,4 +1,7 @@
-package com.pkg.recyclerview.network
+package com.pkg.recyclerview.data
+
+import com.pkg.recyclerview.network.Api
+import com.pkg.recyclerview.model.Task
 
 class TasksRepository {
     private val webService = Api.tasksWebService

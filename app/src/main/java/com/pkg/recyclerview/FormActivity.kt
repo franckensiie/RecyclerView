@@ -1,11 +1,10 @@
-package com.pkg.recyclerview.form
+package com.pkg.recyclerview
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageButton
-import com.pkg.recyclerview.R
-import com.pkg.recyclerview.network.Task
+import com.pkg.recyclerview.model.Task
 import java.util.*
 
 class FormActivity : AppCompatActivity() {

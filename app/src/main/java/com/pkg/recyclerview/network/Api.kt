@@ -1,7 +1,8 @@
 package com.pkg.recyclerview.network
 
-import TasksWebService
+import com.pkg.recyclerview.service.TasksWebService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.pkg.recyclerview.service.UserWebService
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
