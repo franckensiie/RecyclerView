@@ -124,8 +124,7 @@ class UserInfoActivity : AppCompatActivity() {
     private fun ok() {
         AlertDialog.Builder(this)
             .setMessage("C'est enregistré !")
-            .setPositiveButton("OK MERCI BEAUCOUP") { dialog, _ -> setResult(RESULT_OK, intent)
-                finish() }
+            .setPositiveButton("OK MERCI BEAUCOUP") { _, _ -> }
             .show()
     }
 
