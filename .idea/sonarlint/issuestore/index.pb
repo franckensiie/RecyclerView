@@ -5,8 +5,6 @@
 build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
 @
 app/build.gradle,f/4/f4a01d6a4fcb971362ec00a83903fd3902f52164
-j
-:app/src/main/java/com/pkg/recyclerview/UserInfoActivity.kt,4/c/4ccab4c86263fb8f0c79e8884ed6b01481ffee00
 d
 4app/src/main/java/com/pkg/recyclerview/model/Task.kt,1/8/184f1353f9bef781aaedae446b606f6b2fc6a8c3
 q
