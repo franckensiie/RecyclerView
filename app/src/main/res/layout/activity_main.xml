@@ -8,7 +8,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment_tasklist"
-            android:name="com.pkg.recyclerview.tasklist.TaskListFragment"
+            android:name="com.pkg.recyclerview.fragment.TaskListUserInfoFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"/>

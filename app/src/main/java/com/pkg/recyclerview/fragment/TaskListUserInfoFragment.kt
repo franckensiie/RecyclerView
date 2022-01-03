@@ -1,4 +1,4 @@
-package com.pkg.recyclerview.tasklist
+package com.pkg.recyclerview.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -18,10 +18,11 @@ import com.pkg.recyclerview.network.Api
 import com.pkg.recyclerview.model.Task
 import com.pkg.recyclerview.viewModel.TaskListViewModel
 import com.pkg.recyclerview.UserInfoActivity
+import com.pkg.recyclerview.adapter.TaskListAdapter
 import kotlinx.coroutines.launch
 
 
-class TaskListFragment : Fragment() {
+class TaskListUserInfoFragment : Fragment() {
 
     private val myAdapter = TaskListAdapter();
     private val viewModel = TaskListViewModel();

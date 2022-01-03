@@ -1,4 +1,4 @@
-package com.pkg.recyclerview.tasklist
+package com.pkg.recyclerview.adapter
 
 import android.view.LayoutInflater
 import android.view.View
