@@ -9,14 +9,22 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import com.google.android.material.snackbar.Snackbar
 import com.google.modernstorage.mediastore.FileType
 import com.google.modernstorage.mediastore.MediaStoreRepository
 import com.google.modernstorage.mediastore.SharedPrimary
+import com.pkg.recyclerview.databinding.ActivityUserBinding
+import com.pkg.recyclerview.databinding.FragmentTaskListBinding
+import com.pkg.recyclerview.model.UserInfo
 import com.pkg.recyclerview.network.Api
 import com.pkg.recyclerview.viewModel.UserInfoViewModel
 import kotlinx.coroutines.launch
@@ -49,6 +57,21 @@ class UserInfoActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.upload_image_button).setOnClickListener {
             galleryLauncher.launch("image/*")
+        }
+
+        lifecycleScope.launch {
+            val info = viewModel.getInfo()
+            findViewById<EditText>(R.id.name).setText(info?.lastName);
+            findViewById<EditText>(R.id.prename).setText(info?.firstName);
+            findViewById<EditText>(R.id.mail).setText(info?.email);
+        }
+
+        findViewById<Button>(R.id.save_data).setOnClickListener {
+            val name = findViewById<EditText>(R.id.name).text.toString()
+            val prename = findViewById<EditText>(R.id.prename).text.toString()
+            val email = findViewById<EditText>(R.id.mail).text.toString()
+            viewModel.updateData(UserInfo(email, prename, name))
+            ok()
         }
     }
 
@@ -92,14 +115,23 @@ class UserInfoActivity : AppCompatActivity() {
     private fun showExplanation() {
         // ici on construit une pop-up système (Dialog) pour expliquer la nécessité de la demande de permission
         AlertDialog.Builder(this)
-            .setMessage("🥺 On a besoin de la caméra, vraiment! 👉👈")
+            .setMessage("On a besoin de la caméra, vraiment!")
             .setPositiveButton("Bon, ok") { _, _ -> launchAppSettings() }
             .setNegativeButton("Nope") { dialog, _ -> dialog.dismiss() }
             .show()
     }
 
+    private fun ok() {
+        AlertDialog.Builder(this)
+            .setMessage("C'est enregistré !")
+            .setPositiveButton("OK MERCI BEAUCOUP") { dialog, _ -> setResult(RESULT_OK, intent)
+                finish() }
+            .show()
+    }
+
     private fun handleImage(imageUri: Uri) {
         viewModel.updateAvatar(contentResolver.openInputStream(imageUri)!!.readBytes())
+        ok();
     }
 
     private val cameraLauncher =

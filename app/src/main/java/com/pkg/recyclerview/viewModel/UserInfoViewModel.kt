@@ -13,12 +13,9 @@ import okhttp3.MultipartBody
 
 class UserInfoViewModel : ViewModel() {
     private val repo = UserInfoRepository();
-    public var infos : UserInfo? = null;
 
-    fun getInfo() {
-        viewModelScope.launch {
-            infos = repo.getInfo();
-        }
+    suspend fun getInfo(): UserInfo? {
+        return repo.getInfo();
     }
 
     fun updateAvatar(bytes: ByteArray) {
