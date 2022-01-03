@@ -6,8 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pkg.recyclerview.data.TasksRepository
 import com.pkg.recyclerview.data.UserInfoRepository
-import com.pkg.recyclerview.model.Task
-import com.pkg.recyclerview.model.UserInfo
+import com.pkg.recyclerview.model.*
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 
@@ -28,5 +27,13 @@ class UserInfoViewModel : ViewModel() {
         viewModelScope.launch {
             repo.updateData(user);
         }
+    }
+
+    suspend fun getAccount(u : LoginForm): LoginResponse? {
+        return repo.getAccount(u);
+    }
+
+    suspend fun addAccount(u: RegisterForm): RegisterResponse? {
+        return repo.addAccount(u);
     }
 }

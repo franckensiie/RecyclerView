@@ -1,7 +1,9 @@
 package com.pkg.recyclerview.fragment
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,13 +13,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import coil.transform.CircleCropTransformation
-import com.pkg.recyclerview.R
-import com.pkg.recyclerview.FormActivity
+import com.pkg.recyclerview.*
 import com.pkg.recyclerview.databinding.FragmentTaskListBinding
 import com.pkg.recyclerview.network.Api
 import com.pkg.recyclerview.model.Task
 import com.pkg.recyclerview.viewModel.TaskListViewModel
-import com.pkg.recyclerview.UserInfoActivity
 import com.pkg.recyclerview.adapter.TaskListAdapter
 import kotlinx.coroutines.launch
 
@@ -101,11 +101,23 @@ class TaskListUserInfoFragment : Fragment() {
             formLauncher.launch(intent)
         }
 
+        binding.deco.setOnClickListener {
+            val editor = activity!!.getSharedPreferences("TOKEN_SHARE", Context.MODE_PRIVATE).edit()
+            editor.putString("TOKEN", "null")
+            editor.apply()
+            val intent = Intent(activity, AuthenticationActivity::class.java)
+            formLauncher.launch(intent)
+        }
+
     }
 
     override fun onResume() {
         super.onResume()
-
+        if (Api.TOKEN == "null") {
+            val intent = Intent(activity, AuthenticationActivity::class.java)
+            formLauncher.launch(intent)
+            return;
+        }
         binding.avatarImageView.load("https://goo.gl/gEgYUd") {
             transformations(CircleCropTransformation())
         }
@@ -114,11 +126,15 @@ class TaskListUserInfoFragment : Fragment() {
             val userInfo = Api.userWebService.getInfo().body()!!
             val userInfoTextView = binding.userInfoTextView;
             userInfoTextView.text = "${userInfo.firstName} ${userInfo.lastName}"
-            if (userInfo.avatar.toString() != "") {
-                binding.avatarImageView.load(userInfo.avatar) {
-                    transformations(CircleCropTransformation())
-                    error(R.drawable.ic_launcher_background)
-                }
+            var img = if (userInfo.avatar.toString() != "null") {
+                userInfo.avatar.toString();
+            } else {
+                // lol, image par default
+                "https://i.pinimg.com/236x/b0/7d/91/b07d916ac09e9c5d505d53cab16c61c0.jpg"
+            }
+            binding.avatarImageView.load(img) {
+                transformations(CircleCropTransformation())
+                error(R.drawable.ic_launcher_background)
             }
         }
     }

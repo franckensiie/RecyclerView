@@ -1,19 +1,24 @@
 package com.pkg.recyclerview.network
 
+import android.content.Context
+import android.preference.PreferenceManager
 import com.pkg.recyclerview.service.TasksWebService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.pkg.recyclerview.fragment.SHARED_PREF_TOKEN_KEY
 import com.pkg.recyclerview.service.UserWebService
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import android.content.Context.MODE_PRIVATE
+
+import android.content.SharedPreferences
 
 object Api {
-
     // constantes qui serviront à faire les requêtes
     private const val BASE_URL = "https://android-tasks-api.herokuapp.com/api/v1/"
-    private const val TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1MzIsImV4cCI6MTY2OTczODU0Mn0.woPZppOHBs9anJQA2ulxBhuaVuHszFYN2lyHWlcjy1U"
-
+    //public var TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1MzIsImV4cCI6MTY2OTczODU0Mn0.woPZppOHBs9anJQA2ulxBhuaVuHszFYN2lyHWlcjy1U"
+    public var TOKEN = ""
     // client HTTP
     private val okHttpClient by lazy {
         OkHttpClient.Builder()

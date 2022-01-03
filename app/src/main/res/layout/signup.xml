@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/ins_prename"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="First Name" />
+
+    <EditText
+        android:id="@+id/ins_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Name" />
+
+    <EditText
+        android:id="@+id/ins_mail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Mail" />
+
+    <EditText
+        android:id="@+id/ins_mdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Pass"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/ins_mdp_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Pass 2"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/ins_ins"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Inscription" />
+
+</LinearLayout>

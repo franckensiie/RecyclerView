@@ -1,8 +1,7 @@
 package com.pkg.recyclerview.data
 
 import android.net.Uri
-import com.pkg.recyclerview.model.Task
-import com.pkg.recyclerview.model.UserInfo
+import com.pkg.recyclerview.model.*
 import com.pkg.recyclerview.network.Api
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -29,5 +28,15 @@ class UserInfoRepository {
 
     suspend fun updateData(u: UserInfo) {
         webService.update(u);
+    }
+
+    suspend fun getAccount(u: LoginForm) : LoginResponse? {
+        val l = webService.login(u);
+        return if (l.isSuccessful) l.body() else null
+    }
+
+    suspend fun addAccount(u: RegisterForm) : RegisterResponse? {
+        val l = webService.register(u);
+        return if (l.isSuccessful) l.body() else null
     }
 }
